@@ -256,10 +256,6 @@ body.nav-active { overflow: hidden; }
 
 .w-100 { width: 100%; }
 
-
-
-
-
 /*-----------------------------------*\
   #HEADER
 \*-----------------------------------*/
@@ -291,48 +287,50 @@ body.nav-active { overflow: hidden; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  justify-content: flex-start;
 }
 
 .logo {
   position: absolute;
-  left: 0; /* Add padding to increase visible space around the logo */
-  max-width: 200px; /* Or any size that fits the larger logo */
+  left: 0;
+  max-width: 200px;
   margin-right: auto;
   padding-top: 20px;
 }
 .logo-light {
-  display: block; /* visible initially */
+  display: block;
 }
 .logo-dark {
-  display: none; /* hidden initially */
+  display: none;
 }
 
-/* Change logo images when header is active (not scrolled) */
 .header.active .logo-light {
   display: none;
 }
 .header.active .logo-dark {
   display: block;
 }
+
 .logo img {
   transition: opacity 0.3s ease;
 }
 
 .header.active .logo-light,
-.logo-dark {
+.header.active .logo-dark {
   opacity: 0;
-  transition: opacity 0.3s ease;
 }
 
 .header.active .logo-dark {
   opacity: 1;
-  display: block;
 }
 
 .nav-open-btn {
   font-size: 4.5rem;
   color: var(--white);
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+  margin-left: auto;
 }
 
 .header.active .nav-open-btn { color: var(--charcoal); }
@@ -346,19 +344,20 @@ body.nav-active { overflow: hidden; }
   max-width: 300px;
   width: 100%;
   height: 100vh;
-  padding: 30px;
-  padding-block-end: 20px;
+  padding: 30px 20px 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   z-index: 2;
   visibility: hidden;
-  transition: var(--transition-3);
+  transition: left 0.3s ease, visibility 0s 0.3s;
+  box-sizing: border-box;
 }
 
 .navbar.active {
   visibility: visible;
-  transform: translateX(300px);
+  left: 0;
+  transition: left 0.3s ease, visibility 0s;
 }
 
 .navbar-top {
@@ -368,27 +367,37 @@ body.nav-active { overflow: hidden; }
 }
 
 .nav-close-btn {
-  background-color: var(--white_a8);
-  color: var(--white);
+  display: block;
   font-size: 3rem;
-  padding: 6px;
-  border-radius: var(--radius-circle);
-  transition: var(--transition-1);
+  color: var(--white);
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .nav-close-btn ion-icon { --ionicon-stroke-width: 50px; }
 
-.nav-close-btn:is(:hover, :focus-visible) { background-color: var(--white_a12); }
+.nav-close-btn:is(:hover, :focus-visible) { background-color: var(--white); }
 
-.navbar-list { margin-block-end: auto; }
+.navbar-list {
+  margin-block-end: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
 .navbar-link {
   font-weight: var(--fw-700);
+  font-size: 22px;
+  color: var(--white); /* Ensure font color is white */
   padding-block: 2px;
-  font-size: 22px; 
 }
 
-.contact-link { transition: var(--transition-1); }
+.contact-link {
+  color: var(--white); /* Ensure font color is white */
+  transition: var(--transition-1);
+}
 
 .contact-link:is(:hover, :focus-visible) { color: var(--violet-blue-crayola); }
 
@@ -401,7 +410,8 @@ body.nav-active { overflow: hidden; }
   background-color: var(--raisin-black);
   pointer-events: none;
   opacity: 0;
-  transition: var(--transition-1);
+  transition: opacity 0.3s ease;
+  z-index: 3;
 }
 
 .overlay.active {
@@ -409,8 +419,44 @@ body.nav-active { overflow: hidden; }
   opacity: 0.8;
 }
 
+/* Ensure the font size for regular pages is larger */
+body {
+  font-size: 30px; /* Adjust this value as needed for regular pages */
+  line-height: 1.6; /* Optional: improve readability with increased line height */
+}
 
+@media (min-width: 769px) {
+  .nav-open-btn {
+    display: none;
+  }
 
+  .navbar {
+    position: static;
+    width: auto;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: transparent;
+    color: inherit;
+    visibility: visible;
+    left: auto;
+    transform: none;
+  }
+
+  .navbar-list {
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .navbar-link {
+    font-size: 2.3rem;
+  }
+
+  .nav-close-btn {
+    display: none;
+  }
+}
 
 
 /*-----------------------------------*\
@@ -420,6 +466,13 @@ body.nav-active { overflow: hidden; }
 .hero {
   padding-block-start: calc(var(--section-padding) + 70px);
   text-align: center;
+}
+/* For mobile viewports */
+@media (max-width: 768px) {
+  .hero {
+    background: url("./assets/images/Dark Water.mp4" ) no-repeat center center;
+    background-size: cover;
+  }
 }
 .section.hero {
   display: flex;
@@ -1026,8 +1079,19 @@ body.nav-active { overflow: hidden; }
 
   .header .btn { margin-inline-start: 0; }
 
+/* Ensure the container has flex properties */
+.header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
 
-
+/* Style the logo to be on the left */
+.logo {
+  flex-grow: 1;
+}
+  
   /**
    * HERO
    */
